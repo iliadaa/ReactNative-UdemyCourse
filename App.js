@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
 import StartGameScreen from "./screens/StartGameScreen";
@@ -6,7 +6,9 @@ import GameScreen from "./screens/GameScreen";
 import Colors from "./constants/colors";
 import GameOverScreen from "./screens/GameOverScreen";
 import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import AppLoading from "expo-app-loading";
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [userNumber, setUsernumber] = useState();
@@ -18,7 +20,10 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    SplashScreen.preventAutoHideAsync();
+    return null;
+  } else {
+    SplashScreen.hideAsync();
   }
 
   function pickedNumberHanler(pickedNumber) {
